@@ -115,8 +115,24 @@ pub fn place(
     length: usize,
     horizontal: bool,
 ) -> Result<(), PlaceError> {
-    if !can_place(board, row, col, length, horizontal) {
+     if row >= SIZE || col >= SIZE {
         return Err(PlaceError::OutOfBounds);
+    }
+    if horizontal && col + length > SIZE {
+        return Err(PlaceError::OutOfBounds);
+    }
+    if !horizontal && row + length > SIZE {
+        return Err(PlaceError::OutOfBounds);
+    }
+    for i in 0..length {
+        let (r, c) = if horizontal {
+            (row, col + i)
+        } else {
+            (row + i, col)
+        };
+        if board[r][c] != Cell::Water {
+            return Err(PlaceError::Overlap);
+        }
     }
     for i in 0..length {
         if horizontal {
@@ -127,7 +143,6 @@ pub fn place(
     }
     Ok(())
 }
-
 // PROVIDED: place every ship at a random legal position. Err names the first ship that will not fit.
 pub fn place_fleet(
     board: &mut Board,
