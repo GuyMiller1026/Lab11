@@ -5,7 +5,7 @@ One row per failure. Fill in every column. You need at least eight rows.
 | Scenario | Function that detects it | Error value | What the player sees |
 |---|---|---|---|
 | Fleet file does not exist | `load_fleet` | `Err(DataError::Io(..))` (kind `NotFound`) | _(example: your row goes here)_ |
-|  |  |  |  |
+|Missing Fleet file|mv data/fleet.txt data/fleet.bak|load_fleet|Err(DataError::Io(..))|
 |  |  |  |  |
 |  |  |  |  |
 |  |  |  |  |
